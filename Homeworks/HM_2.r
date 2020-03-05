@@ -134,9 +134,6 @@ temp[1,]
 
 cv.user(survey, 'Age', 'Sex')
 
-temp <- (filter(survey["Age"], survey["Sex"]=="Female"))
-mean(temp)
-
 # Variant 1.
 # Use for loop and function unique()
 
