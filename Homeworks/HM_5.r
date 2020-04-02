@@ -5,12 +5,13 @@
 #                  Rafal Rysiejko, 423827                     #
 #-------------------------------------------------------------# 
 
+#--------------------------------------------------------------
 # Exercise 5.1
 # Check which method are defined for 
 # a generic function predict()?
 
 methods(predict)
-
+#--------------------------------------------------------------
 # Exercise 5.2
 # Create a generic function add_all(), then the
 # defaults method and two additional methods:
@@ -44,7 +45,7 @@ y <- c("x","d")
 
 add_all(x)
 add_all(y)
-
+#--------------------------------------------------------------
 # Exercise 5.3
 # Create a new class "student" and two sample objects of this class.
 # Let objects of class "student" have the following fields:
@@ -105,6 +106,3 @@ information.student <- function(x) {
 information(v2)
 
  #--------------------------------------------------------------
-# Sources and more information
-
-# https://www.datamentor.io/r-programming/S3-class

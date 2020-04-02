@@ -148,4 +148,3 @@ setMethod("compare",
           })
 compare(s1, s2)
 
-mean(c(1,2,3)) > mean(c(2,3,4))
