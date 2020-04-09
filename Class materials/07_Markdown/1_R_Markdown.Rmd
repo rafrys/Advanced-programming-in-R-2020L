@@ -1,0 +1,567 @@
+---
+title: "1. Document compilation and Markdown syntax"
+author: "Piotr Ćwiakowski, Piotr Wójcik"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    self_contained: true
+    lib_dir: libs
+    theme: spacelab
+    highlight: tango
+    toc: true
+    toc_float: true
+    include:
+      in_header: header.html
+---
+
+According to wikipedia, Markdown *is a lightweight markup language with plain-text-formatting syntax. Its design allows it to be converted to many output formats, but the original tool by the same name only supports HTML.[9] Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.* 
+
+R Markdown is therefore implementation of markdown technology in R environment. The integrention was conducted by R Studio in their IDE for R.
+
+# 1. Creating new document
+
+<p>
+New R Markdown document can be created by choosing from menu File -> New File -> R Markdown...:
+
+<center><img src="img/newFile.png"></center>
+
+Afterwards, if we launch this option for the first time, some packages can be automatically installed. Then, in the next window, we can choose what kind of file (document/presentation/shiny app/template) we want to create and in what format (html, pdf, MS Office/Open Office). For purpose of this tutorial we will create html document. However after reading this materials we enhance you to try different options. On this webpage [https://rmarkdown.rstudio.com/formats.html](https://rmarkdown.rstudio.com/formats.html) you can study options and difference of various formats.
+
+<center><img src="img/title.png"></center>
+</p>
+
+After clicking "OK" button new script appeared in R Studio (with extention `.Rmd`), which works differently than oridnary `*.R` file:
+
+<center><img src="img/script.png"></center>
+
+If we carefully study this exemplary script we can distinct three different areas:
+
+* header, delineated from the body of the script with three dashes `---`, it is configuration part written using *YAML* language - more about it is available [here](https://bookdown.org/yihui/rmarkdown/html-document.html),
+* blocks of R codes, delineated with apostrophs, called *chunks* which generates output to the document - we will deal with them in second part of the materials,  
+* rest of the document, which consists mostly raw text - the description of the document/report/article, which can be formatted in Markdown - in the introductory part below *markdown syntax* is discussed. 
+
+Now let's learn how to create (compile) output document from *.Rmd* file. The exemplary script is ready for compilation. Compilation is called in R Studio *knittng* and you can do it in two ways - either click on button **Knit** in left upper corner of the script or press shortcut **ctrl + shift + K** (worth to remember, we will use it often). From the script we can create three type od outputs:
+
+* MS Office/Open Office/Libre Office,
+* html,
+* pdf (we will need to instal MikTeX engine first, and sometimes on older systems/R versions also ).
+
+For more profound discussion let's see below materials available online:
+
+* [Definitive guide of Markdown](https://bookdown.org/yihui/rmarkdown/)
+* [Official R Markdown webpage](https://rmarkdown.rstudio.com/index.html)
+
+# 2. Text formatting
+
+Text of the document needs organisations (chapter, headlines, sections, paragraphs, etc.) and styling/formating (bold, italic etc.). In Markdown syntax most of the basic formating are available. Complete (all almost colmplete) list of operations (special symbols) are gathered in pdf cheasheets attached to this materials (`0_rmarkdown-2.0.pdf` and `0_rmarkdown-reference.pdf`). Below in tabset-like fashion we present most of them in examples. In tab `script.Rmd` you can found exemplary code written in R Markdown. On the other hand, tab `document.html` consists compiled code, therefore you can immedietely check out the effect of given markdown syntax.
+
+## Font editions {.tabset}
+
+### script.Rmd
+
+`This is **bolded** text, and this is *italic*. Instead of stars one can use underscores: single to make _italic_ text and double for __bolding__. If you want to cross out text you need to use tilde: ~~przykład~~.`
+
+`one and a half pause can be denoted by double dash: --, and double pause with triple dash: ---`
+ 
+`If you want to use star or underscore as raw symbol, you need to precede it with backslash (as escape sign): \* albo \_.`
+
+Text in R styling code can be denotef using apostrophs, e. g.: some \`R code\`. 
+
+### document.html
+
+This is **bolded** text, and this is *italic*. Instead of stars one can use underscores: single to make _italic_ text and double for __bolding__. If you want to cross out text you need to use tilde: ~~przykład~~.
+
+one and a half pause can be denoted by double dash: --, and double pause with triple dash: ---
+ 
+If you want to use star or underscore as raw symbol, you need to precede it with backslash (as escape sign): \* albo \_.
+
+Text in R styling code can be denotef using apostrophs, e. g.: some `R code`. 
+
+## Headers{.tabset}
+
+Header are created by preceding text with one or more `#`.
+
+### script.Rmd
+
+```
+# 1. Header
+
+## 1.1 Header
+
+### 1.1.1 Header
+
+#### 1.1.1.1 Header
+
+##### 1.1.1.1.1 Header
+
+###### 1.1.1.1.1.1 Header
+```
+
+### document.html
+
+```
+# 1. Header
+
+## 1.1 Header
+
+### 1.1.1 Header
+
+#### 1.1.1.1 Header
+
+##### 1.1.1.1.1 Header
+
+###### 1.1.1.1.1.1 Header
+```
+
+## Superscripts and subscripts {.tabset}
+
+### script.Rmd
+
+superscript: ```y<sup>1</sup>``` or ```y^1^```
+
+subscript: ```y<sub>1</sub>``` or ```y~1~```
+
+### document.html
+
+superscript: y<sup>1</sup> pr y^1^
+
+subscript: y<sub>1</sub> or y~1~
+
+## Paragrahs {.tabset}
+
+If we want to separate part of the graphs by empty line, we cannot simply put it in separate lines. There are two options:
+
+* double spaces - to put text in new line, but in the same paragraph, 
+* double EOL symbols (enters) - to create new paragrap. More EOL will be ignored.
+
+Study the examples.
+
+### script.Rmd
+
+```
+Text in first line.
+Text in second line.
+
+
+***
+Text in first line.
+
+Text in second line.
+
+
+***
+Text in first line.
+
+
+
+Text in second line.
+
+***
+```
+
+### document.html
+
+Text in first line.
+Text in second line.
+
+
+***
+Text in first line.
+
+Text in second line.
+
+
+***
+Text in first line.
+
+
+
+Text in second line.
+
+***
+
+## Lists (ordered and unordered) {.tabset}
+
+### script.Rmd
+
+```
+bullet list:
+
+* item 1
+
+or
+
+- item 2
+
+or
+
++ item 3
+
+
+ordered list:
+
+1. Item 1
+    + subitem 1.1
+    + subitem 1.2
+2. Item 2
+3. Item 3
+4. Item 4
+
+In the list one can nest a lot of levels including indented lines:
+
+1. item 1
+  i) subitem 1.1
+    A) other list of items
+    
+    Some content of item A.
+    
+  i) subitem 1.2
+2. item 2
+3. item 3
+4. item 4
+```
+
+### document.html
+
+bullet list:
+
+* item 1
+
+or
+
+- item 2
+
+or
+
++ item 3
+
+
+ordered list:
+
+1. Item 1
+    + subitem 1.1
+    + subitem 1.2
+2. Item 2
+3. Item 3
+4. Item 4
+
+In the list one can nest a lot of levels including indented lines:
+
+1. item 1
+  i) subitem 1.1
+    A) other list of items
+    
+    Some content of item A.
+    
+  i) subitem 1.2
+2. item 2
+3. item 3
+4. item 4
+
+
+## Quotation {.tabset}
+
+In order to create qoutation cited text should be preceded with ```>```
+
+### script.Rmd
+
+```
+> This is quotation
+
+And then next paragraph
+```
+
+```
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est.
+>
+>  Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+```
+
+### document.html
+
+> This is qoutation.
+
+And then next paragraph:
+
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est.
+>
+>  Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+
+
+## Math equations {.tabset}
+
+In Markdown is implemented special syntax for equations, almost the same as in LaTeX and HTML (mathjax package). More information can be found below, however from our examples and google browser you can extract or necessary information.
+
+* [official web page of mathjax package](https://www.mathjax.org/)
+* [mathjax on wikipedia](https://en.wikipedia.org/wiki/MathJax)
+* [Tutorial on Stack Exchange](https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference)
+
+### script.Rmd
+
+There are two ways of including equations in repotr, inline (single dollar signs): `$A = \pi*r^{2}$`, or as centered, separate sections (double dollar signs): `$$A = \pi*r^{2}$$`:
+
+```
+$\alpha$ - ```$\alpha$```
+
+$\beta$ -  ```$\beta$```
+
+$\omega$ - ```$\omega$```
+
+$\Gamma$ - ```$\Gamma$```
+
+$\Delta$ - ```$\Delta$```
+
+$x_i$ - ```$x_i$```
+
+$x^2$ - ```$x^2$```
+
+$\log_2$ - ```$\log_2 x$``
+
+$\frac{x}{y}$ - ```$\frac{x}{y}$```
+
+$\sum_1^n$ - ```$\sum_1^n$```
+
+Few examples of equations:
+
+$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+
+$$\Biggl(\biggl(\Bigl(\bigl((x)\bigr)\Bigr)\biggr)\Biggr)$$
+
+```
+
+### document.html
+
+In Markdown is implemented special syntax for equations, almost the same as in LaTeX and HTML (mathjax package). There are two ways of including equations in repotr, inline (single dollar signs): $A = \pi*r^{2}$, or as centered, separate sections (double dollar signs): $$A = \pi*r^{2}$$. Selected examples:
+
+$\alpha$ - ```$\alpha$```
+
+$\beta$ -  ```$\beta$```
+
+$\omega$ - ```$\omega$```
+
+$\Gamma$ - ```$\Gamma$```
+
+$\Delta$ - ```$\Delta$```
+
+$x_i$ - ```$x_i$```
+
+$x^2$ - ```$x^2$```
+
+$\log_2$ - ```$\log_2 x$``
+
+$\frac{x}{y}$ - ```$\frac{x}{y}$```
+
+$\sum_1^n$ - ```$\sum_1^n$```
+
+Few examples of equations:
+
+$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+
+$$\Biggl(\biggl(\Bigl(\bigl((x)\bigr)\Bigr)\biggr)\Biggr)$$
+
+<p>
+You can find more information [here](http://www.martinkeefe.com/math/mathjax3), and [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference)
+</p>
+
+
+## Inserting links {.tabset}
+
+Syntax for inserting links is very straightforward.
+
+### script.Rmd
+
+```
+[Link label](http://www.wne.uw.edu.pl) 
+```
+
+### document.html
+
+[Link label](http://www.wne.uw.edu.pl)
+
+## HTML syntax {.tabset}
+
+If we use html output, we can use raw HTML code. It can radically expand possibilities of text formatting. Below a simple example from which you start on. More about html language can be found for example [here.](https://www.w3schools.com/html/)
+
+### script.Rmd
+
+```
+<font color="red">Text sample.</font>
+```
+
+### document.html
+
+<font color="red">Text sample.</font>
+
+## 
+
+In the same way, but in pdf format, LaTeX syntax can be used.
+
+# 3. Tables in the report {.tabset}
+
+Usually, tables in our reports will be a result of an output of R code. However sometimes we will want to hardcode some table in the text. In that moments special syntax for table can be useful.
+
+## Example {.tabset}
+
+With colon symbols one can manipulate text justifying:
+
+### script.Rmd
+
+```
+| Right | Left | Centre  |  Default  |
+|------:|:-----|:-------:|-----------|
+| 12    | 12   | 12      | 12        |
+| 123   | 123  | 123     | 123       |
+| 1     | 1    | 1       | 1         | 
+
+```
+
+### document.html
+
+| Right | Left | Centre  |  Default  |
+|------:|:-----|:-------:|-----------|
+| 12    | 12   | 12      | 12        |
+| 123   | 123  | 123     | 123       |
+| 1     | 1    | 1       | 1         | 
+
+
+# 4. Inserting images
+
+Very often we want to include, apart from charts, some raedy-made graphs, prepared in paint, MS Office or just found on Internet. In Markdown we can use either markdown (less options, less flexible) or HTML syntax (more options, recommended). We present both below. In addition, we used `<center></center>` code from HML, to center graph.
+
+#### Example {.tabset}
+
+##### script.Rmd
+
+```
+![](WNE.png)
+
+<img src="WNE.png">
+
+<center><img src="LM.png"></center>
+```
+
+##### document.html
+
+![](img/WNE.png)
+
+<img src="img/WNE.png">
+
+<center><img src="img/WNE.png"></center>
+
+
+# 5. Tabset panels 
+
+In html one can modify behave of headers, placing expression `{.tabset}` after the text of header. Belowed code:
+
+```
+#### Example 1 {.tabset}
+
+##### Tab 1.1
+
+Content of Tab 1  
+
+##### Tab 1.2
+
+Content of Tab 2  
+
+```
+results in :
+
+#### Example 1 {.tabset}
+
+##### Tab 1.1
+
+Content of Tab 1  
+
+##### Tab 1.2
+
+Content of Tab 2  
+
+####
+This `{.tabset}` style have some additional options, which modify behavior and appearence of the tabsets. For example, `.tabset-fade` causes fading of the content, for example:
+
+```
+#### Example 2 {.tabset .tabset-fade}
+
+##### Tab 2.1
+
+Content of Tab 1
+
+##### Tab 2.2
+
+Content of Tab 2
+```
+
+#### Example 2 {.tabset .tabset-fade}
+
+##### Tab 2.1
+
+Content of Tab 1  
+
+##### Tab 2.2
+
+Content of Tab 2  
+
+####
+Option .tabset-pills change style of tabs.
+
+```
+#### Example 3 {.tabset .tabset-fade .tabset-pills}
+
+##### Tab 3.1
+
+Content of Tab 1  
+
+##### Tab 3.2
+
+Content of Tab 2
+
+####
+
+If we want to finish tab section, we need to just put one hash symbol without any text after (otherwise this will be visible header) 
+```
+
+#### Example 3 {.tabset .tabset-fade .tabset-pills}
+
+##### Tab 3.1
+
+Content of Tab 1  
+
+##### Tab 3.2
+
+Content of Tab 2
+
+####
+
+If we want to finish tab section, we need to just put hash symbols without any text after (otherwise this will be visible header) 
+
+
+# 6. Creating footnotes
+
+#### Example {.tabset .tabset-fade .tabset-pills}
+
+In Markdown there is special syntax for footnotes. Examlpe is below. Attention! One line space is important to make it works.
+
+##### script.Rmd
+
+```
+This code generate footnote index in text [^1]
+
+[^1]: And this is content of footnote in footer.
+```
+
+##### document.html
+
+This code generate footnote index in text [^1]
+
+[^1]: And this is content of footnote in footer.
+
+
+# 7. Exercise (NOT homework, just to practice)
+
+Pick one of wikipedia pages and use content on that page to create exemplary document file. you can use for example:
+
+* https://en.wikipedia.org/wiki/Machine_learning
+* https://en.wikipedia.org/wiki/Marvel_Cinematic_Universe
+* https://en.wikipedia.org/wiki/History_of_Poland
+

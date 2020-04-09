@@ -1,0 +1,63 @@
+
+#containerPW{
+  background: #ffffff;
+  width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+  
+  border-width: medium;
+  border-style: solid;
+  border-color: #ffffff;
+}
+
+#headerPW{
+  background: #ffffff;
+  height: 0px;
+  position: relative;
+}
+
+#headerPW_logo {
+  width: 35%;
+  max-width: 300px;
+  max-height: 85%;
+  float:left;
+  position: relative;
+}
+
+#headerPW_nazwa {
+  width: 80%;
+  float: right;
+}
+
+div.tytul
+{  color: #aa213d; 
+  /*text-shadow: 0 0 0.05em black, 0 0 0.05em black,0 0 0.05em black;*/
+  font-weight: bold;
+  font-size: 0.90em; 
+  text-align: center;
+}
+
+div.tytul p 
+{
+  margin: 0; 
+  display: block;
+  background: white;
+  color:  #661064;
+  line-height: 2;
+  text-align: center;
+}
+
+p.tytul1
+{
+font-size: 100%;
+}
+
+p.tytul2
+{
+font-size: 160%;
+}
+
+p.tytul3
+{
+font-size: 120%;
+}

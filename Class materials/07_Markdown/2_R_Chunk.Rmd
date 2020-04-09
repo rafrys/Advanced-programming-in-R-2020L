@@ -1,0 +1,346 @@
+---
+title: "2. Chunks in R Markdown"
+author: "Piotr Ćwiakowski, Piotr Wójcik"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    self_contained: true
+    lib_dir: libs
+    theme: spacelab
+    highlight: tango
+    toc: true
+    toc_float: true
+    include:
+      in_header: header.html
+---
+
+
+# 1. Introduction
+
+The biggest advantage of using Markdown within R Studio is its integration with other languages - R, Python, SQL and others. R studio gives to user abikity to  (almost) automically includes coude outputs in their report. It is possible via code chunks. Code chunks can be inserted via button "Insert" in upper right corner of script window or simply using shortcut `ctrl + shift + I`. Example of chunks can be found below:
+
+> \`\`\`{r}  
+> `Here you write code you want to include`  
+> \`\`\`
+
+#### Chunk - example: {.tabset}
+
+##### script.Rmd
+
+> \`\`\`{r}  
+> `x <- 2^3 + 2`  
+> `y <- 2 + 3`  
+> `x + y`  
+> \`\`\`
+
+##### document.html
+
+```{r}  
+x <- 2^3 + 2
+y <- 2 + 3
+x + y
+```
+
+# 2. Chunk options
+
+Chunk have many options, which drives the way output is included in the report. User can define value of options in the header of each chunk (it can be done also globally, which we show later on). Let's review the most frequentely used.
+
+#### 2.1. Options: error, warning, message  {.tabset}
+
+By this group of options user can set whether errors, warnings and messges should be included in document. Let's study examples:
+
+##### script.Rmd
+
+> \`\`\`{r}  
+> `library(dplyr)`  
+> \`\`\`
+
+
+> \`\`\`{r error = F, warning = F, message = F}  
+> `library(dplyr)`  
+> \`\`\`
+
+##### document.html
+
+```{r}
+library(dplyr)
+```
+
+```{r include = F}
+detach("package:dplyr", unload = T)
+```
+
+```{r error = F, warning = F, message = F}
+library(dplyr)
+```
+
+#### 2.2. Options: echo, eval, include, comment, results  {.tabset}
+
+With this options we can decide if the code should be evaluated and whether code and/or result should be include in the documet (and how). 
+
+##### script.Rmd
+
+Default behavior:
+
+> \`\`\`{r}  
+> `head(starwars)`  
+> \`\`\`
+
+`echo` parameter decides whether code will be includes:
+
+> \`\`\`{r echo = F}  
+> `head(starwars)`  
+> \`\`\`
+
+`eval` parameter decided whether code will be evaluated (interpreted):
+
+> \`\`\`{r eval = F}  
+> `head(starwars)`  
+> \`\`\`
+
+`include` decides whether evaluated code will be include in the document and output will be invisible:
+ 
+> \`\`\`{r include = F}  
+> `head(starwars)`  
+> \`\`\`
+
+Parameter `results` have 4 values:
+
+* `markup` - prints results as in console (default value)
+* `hide`- hides results
+* `hold` - print results after the whole chunk
+* `asis` - include result "as is" - useful if the output is raw HTML code (like in `kableExtra` or `xtable` packages)
+
+> \`\`\`{r results = 'markup'}  
+> `head(starwars)`  
+> \`\`\`
+
+> \`\`\`{r results = 'hide'}  
+> `head(starwars)`  
+> \`\`\`
+
+> \`\`\`{r results = 'hold'}  
+> `head(starwars)`  
+> \`\`\`
+
+> \`\`\`{r results = 'asis'}  
+> `mean(starwars$height[starwars$name=="Luke Skywalker"])`  
+> \`\`\`
+
+
+##### document.html
+
+Default behavior:
+
+```{r}
+head(starwars) 
+```
+
+`echo` parameter decides whether code will be includes:
+
+```{r echo = F}  
+head(starwars) 
+```
+
+`eval` parameter decided whether code will be evaluated (interpreted):
+
+```{r eval = F}  
+head(starwars) 
+```
+
+`include` decides whether evaluated code will be include in the document and outpu will be visible:
+ 
+```{r include = F}  
+head(starwars) 
+```
+
+Parameter `results` have 4 values:
+
+* `markup` - prints results as in console (default value)
+* `hide`- hides results
+* `hold` - print results after the whole chunk
+* `asis` - include result "as is" - useful if the output is raw HTML code (like in `kableExtra` or `xtable` packages)
+
+```{r results = 'markup', comment = ''}  
+head(starwars) 
+```
+
+```{r results = 'hide'}  
+head(starwars) 
+```
+
+```{r results = 'hold'}  
+head(starwars) 
+```
+
+```{r}  
+mean(starwars$height[starwars$name=="Luke Skywalker"]) 
+```
+
+```{r results = 'asis'}  
+mean(starwars$height[starwars$name=="Luke Skywalker"]) 
+```
+
+## 2.3. Options of figure output {.tabset}
+
+Because very often we want to render some figures in the output, there many options to configure details of a figure:
+
+* `fig.align ` - figure alignment (possible values are `left`, `right`, `center`)
+* `fig.ext` - what should be extension of the file with figure
+* `dev` - what engine (pdf, Cairopdf, png, bmp should be used for rendering)
+* `dev.args` - gateway to pass additional parameters to render engine function (np. `dev.args=list(bg='yellow', pointsize=10)`)
+* `dpi` - resolution of figure in dpi
+* `fig.height` - height in inches 
+* `fig.width`- width in inches
+
+```{r include = F}
+library(ggplot2)
+```
+
+### Example I
+
+```{r fig.align = 'left', fig.width=5.5, fig.height=3}
+# fig.align = 'left', fig.width=5.5, fig.height=3
+ggplot(data = head(starwars), aes(x = name, y = height)) +
+  geom_bar(stat = 'identity')
+```
+
+### Example II
+
+```{r fig.align = 'right', fig.width=6, fig.height=4}
+# fig.align = 'right', fig.width=6, fig.height=4
+ggplot(data = head(starwars), aes(x = name, y = height)) +
+  geom_bar(stat = 'identity')
+```
+
+## 2.5. Caching 
+
+At the beginning, reports will knit quickly. However with increasing number of chunks, espescially with figures, time of knitting will increase substantially. On order to prevent it, you can cache chunk (save result after first knitting in external file). Chunk will be recomputed each time you change anything whithin the chunk. Chunk options which drives this feature is `cache`, which accepts values `TRUE` or `FALSE` (whether cache chunk or not). Additional chunk options, but not used so frequently, are: `cache.comments`, `cache.vars` , `cache.lazy`, `cache.path`, `dependson`.
+
+Accepted practice is to cache chunks, when knitting last more than 5 seconds. Of course chunks with libraries and importing datasets shouldn't be included.
+
+> Exercise (NOT homework)
+
+In order to understand `cache` option, please create a new R Markdown script and include several separate chunks with following code:
+
+```
+library(ggplot2)
+data(diamonds)
+ggplot(diamonds, aes(x = carat, y = price)) + geom_point()
+```
+Afterwards, compile document several times, first set option `cache=FALSE` and then change it to `TRUE`. Did document compile faster?
+
+## 2.6. Inline chunk {.tabset}
+
+Very useful feature is inline chunk. We can include result of the computation as part of the sentence, and therefore ensure to have always actual and correct numbers in the body of the report. For example consider following sentence in the report:
+
+### script.Rmd
+
+In analised dataset there are ```'r nrow(diamonds)'``` observations, and average price is ```'r round(mean(diamonds$price), 2)'``` USD.
+
+### document.html
+
+In analised dataset there are `r nrow(diamonds)` observations, and average price is `r round(mean(diamonds$price), 2)` USD.
+
+## 2.7. Object `opts_chunk`
+
+
+Because very often we want to set some chunk option globally, to save some time while defining them within each chunk, we can use special object in `knitr` package. This object is called `opts_chunk` and among others, consists method `set`, which allows to set parameters globally. Below there is example (notice, that it is usually placed at the beginning of the script).
+
+```{r eval = F}
+knitr::opts_chunk$set(cache = T,
+                      fig.width = 7,
+                      error = F,
+                      message = F,
+                      warning = F)
+```
+
+# 3. General rules of R Markdown
+
+1. R session of R Studio is separated from R session launched for the purpose of document knitting.
+
+2. Therefore, each library and each object needed for code in chunks should be imported at within rmd file.
+
+3. Chunks share workspace, thus results computed in one chunks are available in following chunks.
+
+# 4. Pretty output in chunks
+
+Certain limitation of R chunks are rather simple outputs - like in R console. Significant improvement can be achieved with additional packages, like `kable()`.
+
+```{r}
+library(knitr)
+data(diamonds)
+head(diamonds) %>% 
+  kable()
+```
+
+Kable generates much better looking tables, let's compare it with default output:
+
+```{r}
+data(diamonds)
+head(diamonds)
+```
+
+On the other hand, package `stargazer` consists procedures to generate much more complicated tables (please notice while reading `.Rmd` file, that results option of the cunk is set to `asis`:
+ 
+a. With descripive statistics from data.frame:
+
+```{r, results='asis'}
+# install.packages('stargazer')
+library(stargazer)
+stargazer(attitude, type =  "html")
+```
+
+b. With regression results (one model):
+
+```{r, results='asis', }
+model <- lm(price ~ carat, data = diamonds)
+
+stargazer(model, type = "html")
+```
+
+c. or with many models:
+
+```{r, results='asis'}
+model2 <- lm(price ~ carat + cut, data = diamonds)
+model3 <- lm(price ~ carat + color, data = diamonds)
+
+stargazer(model, model2, model3, type = "html")
+```
+
+# 5. Using external .R scripts and objects in reports
+
+Very often report is result of hundreds of hours of work in R, which result in many scripts written in `.R` scripts which somewe want to include afterwards in `.Rmd` report. On the pther hand, we don't want to double the analytical code in our report, espescially if it computes complicated and time consuming machine learning models. There are several ways to avoid code and computation duplication in `.Rmd` file. 
+
+1. With `load()` function you can qucikly load all necessary objects to the workspace.
+
+```{r}
+load('2a_example.Rdata')
+w2
+```
+
+2. Sometimes, if you want to perform certain computation while knitting, but in the same time you want to avoid including whole code, because it's very long and very uninteresting, you can just source this code:
+
+```{r}
+source('2a_example.R', encoding = 'UTF-8')
+w2
+```
+
+3. Quite comfortable options is to split R file into sections (with special comments, see file `2b_example.R`), use `read_chunk()` function to import R code, and then we can include R code into report simply naming chunks after the sections in R script:
+
+```{r cache = FALSE}
+knitr::read_chunk('2b_example.R')
+```
+
+```{r test-a}
+```
+
+```{r test-b}
+```
+
+# 6. Additional resources
+The most comprehensive guide for chunk options is available here: https://yihui.org/knitr/options/
+
+# 7. Homework
+
+Prepare short R Markdown report (3 tables, 3 figures) using any available dataset. Until next classes, sent to mailbox pcwiakowski@wne.uw.edu.pl zip file with `.Rmd` file, dataset (if necessary) and output file (in format of your choice).
