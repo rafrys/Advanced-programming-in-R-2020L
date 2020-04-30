@@ -374,9 +374,12 @@ benchmark("my_mean2" = {m1 <- my_mean2(myData$x[1:10000])},
 # then loaded into R by the loadcmp() functions
 
 # Eg. file "my_mean2.R" includes the NON-compiled code
+# getwd()
+# setwd('/Users/rafalelpassion/Advanced-programming-in-R-2020L/Class materials')
 
 cmpfile(infile = "my_mean2.R",  # source file
         outfile = "my_mean2_cmp.R") # destination file
+
 
 # lets look into "my_mean2_cmp.R"
 
